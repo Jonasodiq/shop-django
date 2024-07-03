@@ -1,11 +1,15 @@
+from unicodedata import category
 from django.db.models import Manager
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, render
 
 from goods.models import Products
 
-def catalog(request):
+def catalog(request, category_slug):
 
-    goods: Manager(Products) = Products.objects.all()
+    if category_slug == 'all':
+        goods: Manager(Products) = Products.objects.all()
+    else:
+        goods: Any = get_list_or_404(Products.objects.filter(category__slug=category_slug)) 
 
     context: dict[str, Any] = {
         'title': 'Home - Каталог',
