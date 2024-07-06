@@ -17,7 +17,7 @@ def catalog(request, category_slug=None):
     if category_slug == 'all':
         goods: QuerySet[Products] = Products.objects.all()
     elif query:
-        goods: Any = q_search(query)
+        goods: QuerySet[Products] = q_search(query)
     else:
         goods: QuerySet[Products] = get_list_or_404(Products.objects.filter(category__slug=category_slug))
 
